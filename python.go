@@ -7,6 +7,7 @@ import "sync"
 
 var initOnce sync.Once
 
+/*
 func newRandomObject() *C.PyObject {
 	var dict = C.PyDict_New()
 	C.PyDict_SetItem(
@@ -15,7 +16,9 @@ func newRandomObject() *C.PyObject {
 		C.PyUnicode_FromString(C.CString("value")))
 	return dict
 }
+*/
 
+// Initialize initializes python runtime
 func Initialize() {
 	initOnce.Do(func() {
 		C.Py_Initialize()
@@ -29,39 +32,14 @@ func ErrOccured() bool {
 }
 */
 
+// Run executes python code
 func Run(run string) int {
 	return int(C.PyRun_SimpleStringFlags(C.CString(run), nil))
 }
 
+// AddModule adds module and returns object assosiated to it
 func AddModule(str string) *PyObject {
 	ptr := C.PyImport_AddModule(C.CString(str))
-	if ptr != nil {
-		return &PyObject{ptr: ptr}
-	}
-
-	return nil
-}
-
-func EvalGetGlobals() *PyObject {
-	ptr := C.PyEval_GetGlobals()
-	if ptr != nil {
-		return &PyObject{ptr: ptr}
-	}
-
-	return nil
-}
-
-func EvalGetLocals() *PyObject {
-	ptr := C.PyEval_GetLocals()
-	if ptr != nil {
-		return &PyObject{ptr: ptr}
-	}
-
-	return nil
-}
-
-func EvalGetBuildins() *PyObject {
-	ptr := C.PyEval_GetBuiltins()
 	if ptr != nil {
 		return &PyObject{ptr: ptr}
 	}
