@@ -1,6 +1,7 @@
 package python
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -19,6 +20,34 @@ func fib(n int) uint {
 	} else {
 		return fib(n-1) + fib(n-2)
 	}
+}
+
+func Example() {
+	Initialize()
+	main := AddModule("__main__")
+	Run(`
+def F(n):
+  if n == 0: return 0
+  elif n == 1: return 1
+  else: return F(n-1)+F(n-2)
+`)
+	fibFunc := main.GetAttrString("F")
+	if !fibFunc.Callable() {
+		panic("Not callable")
+	}
+
+	tuple := NewTuple(1)
+	defer tuple.Release()
+	val := NewLongFromInt(int64(10))
+	defer val.Release()
+
+	tuple.SetItem(0, val)
+
+	res := fibFunc.Call(tuple)
+	defer res.Release()
+
+	fmt.Printf("%d", res.ToLong().AsInt())
+	// Output: 55
 }
 
 func TestInit(t *testing.T) {
