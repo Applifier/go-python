@@ -7,17 +7,6 @@ import "sync"
 
 var initOnce sync.Once
 
-/*
-func newRandomObject() *C.PyObject {
-	var dict = C.PyDict_New()
-	C.PyDict_SetItem(
-		dict,
-		C.PyUnicode_FromString(C.CString("key")),
-		C.PyUnicode_FromString(C.CString("value")))
-	return dict
-}
-*/
-
 // Initialize initializes python runtime
 func Initialize() {
 	initOnce.Do(func() {

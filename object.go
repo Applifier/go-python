@@ -32,6 +32,21 @@ func (obj *PyObject) ToLong() *PyLong {
 	return &PyLong{PyObject: *obj}
 }
 
+// ToFloat returns a PyFloat
+func (obj *PyObject) ToFloat() *PyFloat {
+	return &PyFloat{PyObject: *obj}
+}
+
+// ToBool returns a PyBool
+func (obj *PyObject) ToBool() *PyBool {
+	return &PyBool{PyObject: *obj}
+}
+
+// ToList returns a PyList
+func (obj *PyObject) ToList() *PyList {
+	return &PyList{PyObject: *obj}
+}
+
 // Callable tells if the PyObject is callable
 func (obj *PyObject) Callable() bool {
 	return C.PyCallable_Check(obj.ptr) == 1
