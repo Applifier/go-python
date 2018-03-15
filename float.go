@@ -1,6 +1,5 @@
 package python
 
-// #cgo pkg-config: python-3.6
 // #include <Python.h>
 import "C"
 
