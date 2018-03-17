@@ -54,3 +54,12 @@ func (list *PyList) GetItem(index int) *PyObject {
 
 	return nil
 }
+
+// SetItem set item into given index
+func (list *PyList) SetItem(index int, obj *PyObject) error {
+	if C.PyList_SetItem(list.ptr, C.long(index), obj.ptr) == -1 {
+		return ErrCouldNotInsert
+	}
+
+	return nil
+}

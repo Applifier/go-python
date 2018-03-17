@@ -148,7 +148,6 @@ func BenchmarkFunctionCall(b *testing.B) {
 	tuple.SetItem(0, val)
 
 	defer tuple.Release()
-	defer val.Release()
 
 	for i := 0; i < b.N; i++ {
 		fibFunc.Call(tuple).Release()
